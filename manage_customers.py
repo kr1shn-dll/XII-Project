@@ -25,7 +25,6 @@ canvas.place(x = 0, y = 0)
 
 canvas.create_image(640,360,image=bg)
 canvas.create_text(47,0,anchor="nw",text="THE CONTINENTAL",fill="#950B3C",font=("Cinzel Decorative Black", 106 * -1))
-canvas.create_rectangle(1250,600,150,300,fill="white")
 
 window.resizable(False,False)
 window.mainloop()
