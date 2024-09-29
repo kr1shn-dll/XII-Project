@@ -2,7 +2,7 @@
 # The Continental hotel management tool
 
 This is a simple school cs project for my grade 12 board examinations.
-If you want to use this for your school project or anythign then feel free to do so
+If you want to use this for your school project or anything then feel free to do so
 
 
 ## Deployment
