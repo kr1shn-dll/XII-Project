@@ -12,12 +12,12 @@ def switch_4():
 
 window = Tk()
 
-bg = PhotoImage(file=r"Resources\bg.png")
-logo = PhotoImage(file=r"Resources\logo.png")
-button_image_1 = PhotoImage(file=r"Resources\button_1.png")
-button_image_2 = PhotoImage(file=r"Resources\button_2.png")
-button_image_3 = PhotoImage(file=r"Resources\button_3.png")
-button_image_4 = PhotoImage(file=r"Resources\button_4.png")
+bg = PhotoImage(file=r"Resources\Home\bg.png")
+logo = PhotoImage(file=r"Resources\Home\logo.png")
+button_image_1 = PhotoImage(file=r"Resources\Home\button_1.png")
+button_image_2 = PhotoImage(file=r"Resources\Home\button_2.png")
+button_image_3 = PhotoImage(file=r"Resources\Home\button_3.png")
+button_image_4 = PhotoImage(file=r"Resources\Home\button_4.png")
 
 window.geometry("1280x720")
 window.configure(bg = "#FFFFFF")

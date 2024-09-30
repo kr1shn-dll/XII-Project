@@ -10,8 +10,8 @@ cursor = connection.cursor()
 
 window = Tk()
 
-bg = PhotoImage(file=r"Resources\bg.png")
-logo = PhotoImage(file=r"Resources\logo.png")
+bg = PhotoImage(file=r"Resources\Home\bg.png")
+logo = PhotoImage(file=r"Resources\Home\logo.png")
 
 window.geometry("1280x720")
 window.configure(bg = "#FFFFFF")
@@ -62,13 +62,13 @@ remove_label = Label(menu,bg="#CDA84C")
 remove_label.place(x=860,y=90,width=400,height=3)
 
 main = Frame(window,bg="#CDA84C")
-main.configure(width=1280,height=450)
+main.configure(width=1280,height=470)
 main.place(x=0,y=250)
 
 def add_switch():
     global add_page
     add_page = Frame(main,bg="#CDA84C")
-    add_page.configure(width=1280,height=450)
+    add_page.configure(width=1280,height=470)
     Label(add_page,text="ADD CUSTOMERS PAGE",font=("Cascadia Code SemiBold",32)).pack()
     add_page.place(x=0,y=0)
 add_switch()
@@ -76,7 +76,7 @@ add_switch()
 def edit_switch():
     global edit_page
     edit_page = Frame(main,bg="#CDA84C")
-    edit_page.configure(width=1280,height=450)
+    edit_page.configure(width=1280,height=470)
     Label(edit_page,text="EDIT CUSTOMERS PAGE",font=("Cascadia Code SemiBold",32)).pack()
     edit_page.place(x=0,y=0)
 edit_switch()
@@ -85,7 +85,7 @@ edit_page.destroy()
 def remove_switch():
     global remove_page
     remove_page = Frame(main,bg="#CDA84C")
-    remove_page.configure(width=1280,height=450)
+    remove_page.configure(width=1280,height=470)
     Label(remove_page,text="REMOVE CUSTOMERS PAGE",font=("Cascadia Code SemiBold",32)).pack()
     remove_page.place(x=0,y=0)
 remove_switch()

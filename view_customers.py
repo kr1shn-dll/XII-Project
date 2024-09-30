@@ -12,8 +12,8 @@ cursor = connection.cursor()
 
 window = Tk()
 
-bg = PhotoImage(file=r"Resources\bg.png")
-logo = PhotoImage(file=r"Resources\logo.png")
+bg = PhotoImage(file=r"Resources\Home\bg.png")
+logo = PhotoImage(file=r"Resources\Home\logo.png")
 
 window.geometry("1280x720")
 window.configure(bg = "#FFFFFF")
