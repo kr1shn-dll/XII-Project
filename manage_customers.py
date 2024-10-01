@@ -11,7 +11,9 @@ cursor = connection.cursor()
 window = Tk()
 
 bg = PhotoImage(file=r"Resources\Home\bg.png")
-logo = PhotoImage(file=r"Resources\Home\logo.png")
+logo = PhotoImage(file=r"Resources\Mcustomer\logo.png")
+add_bg = PhotoImage(file=r"Resources\Mcustomer\add_bg.png")
+add_submit = PhotoImage(file=r"Resources\Mcustomer\submit_button.png") 
 
 window.geometry("1280x720")
 window.configure(bg = "#FFFFFF")
@@ -69,16 +71,58 @@ def add_switch():
     global add_page
     add_page = Frame(main,bg="#CDA84C")
     add_page.configure(width=1280,height=470)
-    Label(add_page,text="ADD CUSTOMERS PAGE",font=("Cascadia Code SemiBold",32)).pack()
     add_page.place(x=0,y=0)
+    canvas = Canvas(add_page,bg = "#FFFFFF",height = 470,width = 1280,bd = 0,highlightthickness = 0,relief = "ridge")
+    canvas.place(x = 0, y = 0)
+    canvas.create_image(640.0,235.0,image=add_bg)
+    canvas.create_image(1032.0,151.0,image=logo)
+    canvas.create_text(36.0,42.0,anchor="nw",text="UNIQUE ID",fill="#000000",font=("Roboto Slab", 40 * -1))
+    canvas.create_text(36.0,125.0,anchor="nw",text="FULL NAME",fill="#000000",font=("Roboto Slab", 40 * -1))
+    canvas.create_text(36.0,208.0,anchor="nw",text="PHONE NO.",fill="#000000",font=("Roboto Slab", 40 * -1))
+    canvas.create_text(36.0,291.0,anchor="nw",text="EMAIL ADD.",fill="#000000",font=("Roboto Slab", 40 * -1))
+    canvas.create_text(36.0,374.0,anchor="nw",text="ADDRESS",fill="#000000",font=("Roboto Slab", 40 * -1))
+    uid = Entry(add_page,bd=0,bg="#FFFFFF",fg="#000000",highlightthickness=0,font=("Calibri",40))
+    uid.place(x=290.0,y=42.0,width=459.0,height=53.0)
+    name = Entry(add_page,bd=0,bg="#FFFFFF",fg="#000000",highlightthickness=0,font=("Calibri",40))
+    name.place(x=290.0,y=127.0,width=459.0,height=53.0)
+    phone = Entry(add_page,bd=0,bg="#FFFFFF",fg="#000000",highlightthickness=0,font=("Calibri",40))
+    phone.place(x=290.0,y=212.0,width=459.0,height=53.0)
+    email = Entry(add_page,bd=0,bg="#FFFFFF",fg="#000000",highlightthickness=0,font=("Calibri",40))
+    email.place(x=290.0,y=297,width=459.0,height=53.0)
+    address = Entry(add_page,bd=0,bg="#FFFFFF",fg="#000000",highlightthickness=0,font=("Calibri",40))
+    address.place(x=290.0,y=382,width=459.0,height=53.0)
+    submit_button = Button(add_page,image=add_submit,borderwidth=0,highlightthickness=0,command=lambda: print("Sumbit button clicked"),relief="flat")
+    submit_button.place(x=836.0,y=289.0,width=391.0,height=113.0)
+
 add_switch()
 
 def edit_switch():
     global edit_page
     edit_page = Frame(main,bg="#CDA84C")
     edit_page.configure(width=1280,height=470)
-    Label(edit_page,text="EDIT CUSTOMERS PAGE",font=("Cascadia Code SemiBold",32)).pack()
     edit_page.place(x=0,y=0)
+    canvas = Canvas(edit_page,bg = "#FFFFFF",height = 470,width = 1280,bd = 0,highlightthickness = 0,relief = "ridge")
+    canvas.place(x = 0, y = 0)
+    canvas.create_image(640.0,235.0,image=add_bg)
+    canvas.create_image(1032.0,151.0,image=logo)
+    canvas.create_text(36.0,125.0,anchor="nw",text="FULL NAME",fill="#000000",font=("Roboto Slab", 40 * -1))
+    canvas.create_text(36.0,208.0,anchor="nw",text="PHONE NO.",fill="#000000",font=("Roboto Slab", 40 * -1))
+    canvas.create_text(36.0,291.0,anchor="nw",text="EMAIL ADD.",fill="#000000",font=("Roboto Slab", 40 * -1))
+    canvas.create_text(36.0,374.0,anchor="nw",text="ADDRESS",fill="#000000",font=("Roboto Slab", 40 * -1))
+    pick = StringVar()
+    options = ["Krishn","Kapish","Shivam"]
+    OptionMenu(edit_page,pick,*options).place(x=290.0,y=42.0,width=459.0,height=53.0)
+    name = Entry(edit_page,bd=0,bg="#FFFFFF",fg="#000000",highlightthickness=0,font=("Calibri",40))
+    name.place(x=290.0,y=127.0,width=459.0,height=53.0)
+    phone = Entry(edit_page,bd=0,bg="#FFFFFF",fg="#000000",highlightthickness=0,font=("Calibri",40))
+    phone.place(x=290.0,y=212.0,width=459.0,height=53.0)
+    email = Entry(edit_page,bd=0,bg="#FFFFFF",fg="#000000",highlightthickness=0,font=("Calibri",40))
+    email.place(x=290.0,y=297,width=459.0,height=53.0)
+    address = Entry(edit_page,bd=0,bg="#FFFFFF",fg="#000000",highlightthickness=0,font=("Calibri",40))
+    address.place(x=290.0,y=382,width=459.0,height=53.0)
+    submit_button = Button(edit_page,image=add_submit,borderwidth=0,highlightthickness=0,command=lambda: print("Sumbit button clicked"),relief="flat")
+    submit_button.place(x=836.0,y=289.0,width=391.0,height=113.0)
+
 edit_switch()
 edit_page.destroy()
 
@@ -86,10 +130,14 @@ def remove_switch():
     global remove_page
     remove_page = Frame(main,bg="#CDA84C")
     remove_page.configure(width=1280,height=470)
-    Label(remove_page,text="REMOVE CUSTOMERS PAGE",font=("Cascadia Code SemiBold",32)).pack()
     remove_page.place(x=0,y=0)
+    pick = StringVar()
+    options = ["Krishn","Kapish","Shivam"]
+    OptionMenu(remove_page,pick,*options).place(x=290.0,y=42.0,width=459.0,height=53.0)
+
 remove_switch()
 remove_page.destroy()
+
 
 
 window.resizable(False,False)
