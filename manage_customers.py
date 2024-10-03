@@ -4,7 +4,7 @@ import mysql.connector as sql
 connection = sql.connect(host="localhost",
                                  user="root",
                                  passwd="root",
-                                 database="project",
+                                 database="Continental",
                                  auth_plugin='mysql_native_password')
 cursor = connection.cursor()
 
@@ -111,9 +111,9 @@ def edit_switch():
     canvas.create_text(36.0,208.0,anchor="nw",text="PHONE NO.",fill="#000000",font=("Roboto Slab", 40 * -1))
     canvas.create_text(36.0,291.0,anchor="nw",text="EMAIL ADD.",fill="#000000",font=("Roboto Slab", 40 * -1))
     canvas.create_text(36.0,374.0,anchor="nw",text="ADDRESS",fill="#000000",font=("Roboto Slab", 40 * -1))
-    pick = StringVar()
-    options = ["Krishn","Kapish","Shivam"]
-    OptionMenu(edit_page,pick,*options).place(x=290.0,y=42.0,width=459.0,height=53.0)
+    pick_customer = StringVar()
+    customers = ["Krishn","Kapish","Shivam"]
+    OptionMenu(edit_page,pick_customer,*customers).place(x=290.0,y=42.0,width=459.0,height=53.0)
     name = Entry(edit_page,bd=0,bg="#FFFFFF",fg="#000000",highlightthickness=0,font=("Calibri",40))
     name.place(x=290.0,y=127.0,width=459.0,height=53.0)
     phone = Entry(edit_page,bd=0,bg="#FFFFFF",fg="#000000",highlightthickness=0,font=("Calibri",40))
@@ -138,9 +138,9 @@ def remove_switch():
     canvas.create_image(640.0,235.0,image=frame_bg)
     canvas.create_image(1032.0,151.0,image=logo)
     canvas.create_text(36.0,125.0,anchor="nw",text="SELECT WHICH CUSTOMER\nTO DELETE",fill="#000000",font=("Roboto Slab", 40 * -1))
-    pick = StringVar()
-    options = ["Krishn","Kapish","Shivam"]
-    OptionMenu(remove_page,pick,*options).place(x=290.0,y=42.0,width=459.0,height=53.0)
+    pick_customer = StringVar()
+    customers = ["Krishn","Kapish","Shivam"]
+    OptionMenu(remove_page,pick_customer,*customers).place(x=290.0,y=42.0,width=459.0,height=53.0)
     Button(remove_page,image=removeButton,borderwidth=0,highlightthickness=0,
                            command=lambda: print("Remove button clicked"),relief="flat").place(x=836.0,y=289.0,
                                                                                                width=391.0,height=113.0)

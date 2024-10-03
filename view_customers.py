@@ -5,7 +5,7 @@ import mysql.connector as sql
 connection = sql.connect(host="localhost",
                                  user="root",
                                  passwd="root",
-                                 database="project",
+                                 database="Continental",
                                  auth_plugin='mysql_native_password')
 
 cursor = connection.cursor()
