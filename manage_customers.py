@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 import mysql.connector as sql
 
 connection = sql.connect(host="localhost",
@@ -7,6 +8,48 @@ connection = sql.connect(host="localhost",
                                  database="Continental",
                                  auth_plugin='mysql_native_password')
 cursor = connection.cursor()
+
+def add_submit(uid,name,phone,email,address):
+    a = int(uid.get())
+    b = name.get()
+    c = str(phone.get())
+    d = email.get()
+    e = address.get()
+    try:
+        cursor.execute(f"INSERT INTO customers VALUES('{a}','{b}','{c}','{d}','{e}',NULL);")
+        connection.commit()
+    except:
+        messagebox.showerror(title="STATUS",message="UID already in use")
+    else:
+        messagebox.showinfo(title="STATUS",message="CUSTOMER ADDED SUCCESFULLY")
+    finally:
+        add_page.destroy()
+        add_switch()
+
+def edit_submit(uid,name,phone,email,address):
+    a = uid.get()
+    b = name.get()
+    c = phone.get()
+    d = email.get()
+    e = address.get()
+    answer = messagebox.askyesno(title="CONFIRM CHANGES",message="ARE YOU SURE YOU WANT TO EDIT INFO?")
+    if answer:
+        cursor.execute(f"update customers set Name = '{b}', Phone = {c}, Email='{d}',Address='{e}' WHERE UID = '{a}';")
+        connection.commit()
+        messagebox.showinfo(title="STATUS",message="CUSTOMER EDITED SUCCESFULLY")
+        edit_page.destroy()
+        edit_switch()
+    
+def remove_submit(name):
+    answer = messagebox.askyesno(title="CONFIRM CHANGES",message="ARE YOU SURE YOU WANT TO DELETE CUSTOMER?")
+    a = name.get()
+    if answer:
+        cursor.execute(f"delete from customers where name = '{a}';")
+        connection.commit()
+        messagebox.showinfo(title="STATUS",message="CUSTOMER DELETED  SUCCESFULLY")
+        remove_page.destroy()
+        remove_switch()
+
 
 window = Tk()
 
@@ -93,7 +136,7 @@ def add_switch():
     address = Entry(add_page,bd=0,bg="#FFFFFF",fg="#000000",highlightthickness=0,font=("Calibri",40))
     address.place(x=290.0,y=382,width=459.0,height=53.0)
     Button(add_page,image=submitButton,borderwidth=0,highlightthickness=0,
-           command=lambda: print("Sumbit button clicked"),relief="flat").place(x=836.0,y=289.0,
+           command=lambda: add_submit(uid,name,phone,email,address),relief="flat").place(x=836.0,y=289.0,
                                                                                width=391.0,height=113.0)
 
 add_switch()
@@ -107,13 +150,30 @@ def edit_switch():
     canvas.place(x = 0, y = 0)
     canvas.create_image(640.0,235.0,image=frame_bg)
     canvas.create_image(1032.0,151.0,image=logo)
+    canvas.create_text(36.0,42.0,anchor="nw",text="UNIQUE ID",fill="#000000",font=("Roboto Slab", 40 * -1))
     canvas.create_text(36.0,125.0,anchor="nw",text="FULL NAME",fill="#000000",font=("Roboto Slab", 40 * -1))
     canvas.create_text(36.0,208.0,anchor="nw",text="PHONE NO.",fill="#000000",font=("Roboto Slab", 40 * -1))
     canvas.create_text(36.0,291.0,anchor="nw",text="EMAIL ADD.",fill="#000000",font=("Roboto Slab", 40 * -1))
     canvas.create_text(36.0,374.0,anchor="nw",text="ADDRESS",fill="#000000",font=("Roboto Slab", 40 * -1))
-    pick_customer = StringVar()
-    customers = ["Krishn","Kapish","Shivam"]
-    OptionMenu(edit_page,pick_customer,*customers).place(x=290.0,y=42.0,width=459.0,height=53.0)
+    uid = StringVar()
+    cursor.execute("select * from customers;")
+    data =  cursor.fetchall()
+    customers = []
+    for i in data:
+        customers.append(i[0])
+    def select(uid):
+        name.delete(0,END)
+        phone.delete(0,END)
+        email.delete(0,END)
+        address.delete(0,END)
+        for i in data:
+            if i[0] == uid:
+                name.insert(0,i[1])
+                phone.insert(0,i[2])
+                email.insert(0,i[3])
+                address.insert(0,i[4])
+
+    OptionMenu(edit_page,uid,*customers,command= lambda uid: select(uid) ).place(x=290.0,y=42.0,width=459.0,height=53.0)
     name = Entry(edit_page,bd=0,bg="#FFFFFF",fg="#000000",highlightthickness=0,font=("Calibri",40))
     name.place(x=290.0,y=127.0,width=459.0,height=53.0)
     phone = Entry(edit_page,bd=0,bg="#FFFFFF",fg="#000000",highlightthickness=0,font=("Calibri",40))
@@ -123,7 +183,7 @@ def edit_switch():
     address = Entry(edit_page,bd=0,bg="#FFFFFF",fg="#000000",highlightthickness=0,font=("Calibri",40))
     address.place(x=290.0,y=382,width=459.0,height=53.0)
     Button(edit_page,image=submitButton,borderwidth=0,highlightthickness=0,
-                           command=lambda: print("Sumbit button clicked"),relief="flat").place(x=836.0,y=289.0,
+                           command=lambda: edit_submit(uid,name,phone,email,address),relief="flat").place(x=836.0,y=289.0,
                                                                                                width=391.0,height=113.0)
 edit_switch()
 edit_page.destroy()
@@ -138,11 +198,14 @@ def remove_switch():
     canvas.create_image(640.0,235.0,image=frame_bg)
     canvas.create_image(1032.0,151.0,image=logo)
     canvas.create_text(36.0,125.0,anchor="nw",text="SELECT WHICH CUSTOMER\nTO DELETE",fill="#000000",font=("Roboto Slab", 40 * -1))
-    pick_customer = StringVar()
-    customers = ["Krishn","Kapish","Shivam"]
-    OptionMenu(remove_page,pick_customer,*customers).place(x=290.0,y=42.0,width=459.0,height=53.0)
+    name = StringVar()
+    customers = []
+    cursor.execute("select name from customers;")
+    for i in cursor.fetchall():
+        customers.append(i[0])
+    OptionMenu(remove_page,name,*customers).place(x=290.0,y=42.0,width=459.0,height=53.0)
     Button(remove_page,image=removeButton,borderwidth=0,highlightthickness=0,
-                           command=lambda: print("Remove button clicked"),relief="flat").place(x=836.0,y=289.0,
+                           command=lambda: remove_submit(name),relief="flat").place(x=836.0,y=289.0,
                                                                                                width=391.0,height=113.0)
 remove_switch()
 remove_page.destroy()

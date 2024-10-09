@@ -132,12 +132,15 @@ def book_switch():
     canvas.create_image(520.0,190.0,image=arrow)
     canvas.create_text(36.0,42.0,anchor="nw",text="CUSTOMER",fill="#000000",font=("Roboto Slab", 40 * -1))
     canvas.create_text(36.0,291.0,anchor="nw",text="ROOM",fill="#000000",font=("Roboto Slab", 39 * -1))
+    canvas.create_text(36.0,374.0,anchor="nw",text="Checkout",fill="#000000",font=("Roboto Slab", 40 * -1))
     pick_customer = StringVar()
     pick_room = StringVar()
     customers = ["Krishn","Kapish","Shivam"]
     rooms = ["A123","B069","A079"]
     OptionMenu(book_page,pick_customer,*customers).place(x=290.0,y=42.0,width=459.0,height=53.0)
     OptionMenu(book_page,pick_room,*rooms).place(x=290.0,y=297,width=459.0,height=53.0)
+    cost = Entry(book_page,bd=0,bg="#FFFFFF",fg="#000000",highlightthickness=0,font=("Calibri",40))
+    cost.place(x=290.0,y=382,width=459.0,height=53.0)
     submit_button = Button(book_page,image=submitButton,borderwidth=0,highlightthickness=0,command=lambda: print("Sumbit button clicked"),relief="flat")
     submit_button.place(x=836.0,y=289.0,width=391.0,height=113.0)
 
