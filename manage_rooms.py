@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 import mysql.connector as sql
 
 
@@ -11,6 +12,33 @@ connection = sql.connect(host="localhost",
 cursor = connection.cursor()
 
 window = Tk()
+
+def add_submit(rid,name,floor,ac,cost):
+    a = rid.get()
+    b = name.get()
+    c = floor.get()
+    d = ac.get()
+    e = cost.get()
+    try:
+       cursor.execute(f"insert into rooms values('{a}','{b}','{c}','{d}','{e}',NULL,NULL);")
+       connection.commit()
+    except:
+        messagebox.showerror(title="STATUS",message="RID already in use")
+    else:
+        messagebox.showinfo(title="STATUS",message="Room Added successfuly")
+    finally:
+        add_page.destroy()
+        add_switch()
+
+def remove_submit(name):
+    a = name.get()
+    answer = messagebox.askyesno(title="STATUS",message="Are you sure you want to remove rooms")
+    if answer:
+       cursor.execute(f"delete from rooms where name = '{a}';")
+       connection.commit
+       remove_page.destroy()
+       remove_switch()
+ 
 
 bg = PhotoImage(file=r"Resources\Home\bg.png")
 logo = PhotoImage(file=r"Resources\Mcustomer\logo.png")
@@ -96,8 +124,8 @@ def add_switch():
     OptionMenu(add_page,ac,"AC","NON-AC").place(x=290.0,y=297,width=459.0,height=53.0)
     cost = Entry(add_page,bd=0,bg="#FFFFFF",fg="#000000",highlightthickness=0,font=("Calibri",40))
     cost.place(x=290.0,y=382,width=459.0,height=53.0)
-    submit_button = Button(add_page,image=submitButton,borderwidth=0,highlightthickness=0,command=lambda: print("Sumbit button clicked"),relief="flat")
-    submit_button.place(x=836.0,y=289.0,width=391.0,height=113.0)
+    Button(add_page,image=submitButton,borderwidth=0,highlightthickness=0,
+                           command=lambda: add_submit(rid,name,floor,ac,cost)).place(x=836.0,y=289.0,width=391.0,height=113.0)
 
 add_switch()
 
@@ -111,12 +139,14 @@ def remove_switch():
     canvas.create_image(640.0,235.0,image=frame_bg)
     canvas.create_image(1032.0,151.0,image=logo)
     canvas.create_text(36.0,125.0,anchor="nw",text="SELECT WHICH ROOM\nTO DELETE",fill="#000000",font=("Roboto Slab", 40 * -1))
-    pick_room = StringVar()
-    rooms = ["A123","B285","A043"]
-    OptionMenu(remove_page,pick_room,*rooms).place(x=290.0,y=42.0,width=459.0,height=53.0)
-    Button(remove_page,image=removeButton,borderwidth=0,highlightthickness=0,
-                           command=lambda: print("Remove button clicked"),relief="flat").place(x=836.0,y=289.0,
-                                                                                               width=391.0,height=113.0)
+    name = StringVar()
+    rooms = []
+    cursor.execute("select name from rooms;")
+    for i in cursor.fetchall():
+        rooms.append(i[0])
+    OptionMenu(remove_page,name,*rooms).place(x=290.0,y=42.0,width=459.0,height=53.0)
+    Button(remove_page,image=removeButton,borderwidth=0,highlightthickness=0,relief="flat",
+           command=lambda: remove_submit(name)).place(x=836.0,y=289.0,width=391.0,height=113.0)
 remove_switch()
 remove_page.destroy()
 
