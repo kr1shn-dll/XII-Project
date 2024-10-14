@@ -31,6 +31,6 @@ Make sure to install the required font(s) in the resources folder
 - Edit customer information
 - View customers
 - Add room details
-- Delete rooms
+- CLear rooms
 - Book rooms 
 - View rooms
