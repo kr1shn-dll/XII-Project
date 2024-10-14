@@ -32,11 +32,19 @@ def add_submit(rid,name,floor,ac,cost):
 
 def remove_submit(name):
     a = name.get()
-    answer = messagebox.askyesno(title="STATUS",message="Are you sure you want to remove rooms")
+    cursor.execute("select name,rid from rooms;")
+    for i in cursor.fetchall():
+        if i[0] == a:
+            a = i[1]
+            break
+    print(a)
+    answer = messagebox.askyesno(title="STATUS",message="Are you sure you want to remove occupant")
     if answer:
-       cursor.execute(f"delete from rooms where name = '{a}';")
+       print(f"update rooms set occupant = NULL,checkout = NULL where rid = {a};")
+       cursor.execute(f"update rooms set occupant = NULL,checkout = NULL where rid = {a};")
        connection.commit
-       remove_page.destroy()
+       messagebox.showinfo(title="STATUS",message="Room cleared successfully")
+       remove_page.destroy() 
        remove_switch()
  
 
@@ -81,7 +89,7 @@ add_button.place(x=20,y=0,width=400)
 add_label = Label(menu,bg="#950B3C")
 add_label.place(x=20,y=90,width=400,height=3)
 
-remove_button = Button(menu,text="REMOVE ROOMS",font=("Cascadia Code SemiBold",32),bd=0,
+remove_button = Button(menu,text="CLEAR ROOMS",font=("Cascadia Code SemiBold",32),bd=0,
                      fg="#950B3C",activeforeground="#950B3C",bg="#CDA84C",activebackground="#CDA84C",
                      command = lambda: switch(remove_label,remove_switch))
 remove_button.place(x=440,y=0,width=400)
@@ -138,7 +146,7 @@ def remove_switch():
     canvas.place(x = 0, y = 0)
     canvas.create_image(640.0,235.0,image=frame_bg)
     canvas.create_image(1032.0,151.0,image=logo)
-    canvas.create_text(36.0,125.0,anchor="nw",text="SELECT WHICH ROOM\nTO DELETE",fill="#000000",font=("Roboto Slab", 40 * -1))
+    canvas.create_text(36.0,125.0,anchor="nw",text="SELECT WHICH ROOM\nTO CLEAR/\nREMOVE OCCUPANT FROM",fill="#000000",font=("Roboto Slab", 40 * -1))
     name = StringVar()
     rooms = []
     cursor.execute("select name from rooms;")
