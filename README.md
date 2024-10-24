@@ -16,7 +16,7 @@ To run this project open the main.py python file
 A few MYSQL commands need to be excuted 
 
 ```bash
-  resources/SQL_cmds.sql
+  MySQL> source /XII-Project/resources/SQL_cmds.sql
   ```
 Make sure to install the required font(s) in the resources folder
 
