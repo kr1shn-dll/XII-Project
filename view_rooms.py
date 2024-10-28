@@ -85,6 +85,8 @@ def all_switch():
     table.heading("cost",text="ROOM COST PER NIGHT(₹)")
     table.heading("occupant",text="OCCUPANT")
     table.heading("checkout",text=" CHECKOUT")
+    for col in ("rid", "name", "floor", "ac", "cost", "occupant", "checkout"):
+        table.column(col, width=150, anchor="center")
     table.place(x=40,y=40,height=395,width=1200)
     cursor.execute("select * from rooms;")
     for i in cursor.fetchall():
@@ -108,6 +110,8 @@ def occupied_switch():
     table.heading("cost",text="ROOM COST PER NIGHT(₹)")
     table.heading("occupant",text="OCCUPANT")
     table.heading("checkout",text=" CHECKOUT")
+    for col in ("rid", "name", "floor", "ac", "cost", "occupant", "checkout"):
+        table.column(col, width=150, anchor="center")
     table.place(x=40,y=40,height=395,width=1200)
     cursor.execute("select * from rooms where not occupant = 'N/A' and not checkout = 'N/A';")
     for i in cursor.fetchall():
@@ -128,9 +132,11 @@ def available_switch():
     table.heading("name",text="ROOM NAME")
     table.heading("floor",text="FLOOR")
     table.heading("ac",text="AC/NON-AC")
-    table.heading("cost",text="ROOM COST")
+    table.heading("cost",text="ROOM COST PER NIGHT(₹)")
     table.heading("occupant",text="OCCUPANT")
     table.heading("checkout",text=" CHECKOUT")
+    for col in ("rid", "name", "floor", "ac", "cost", "occupant", "checkout"):
+        table.column(col, width=150, anchor="center")
     cursor.execute("select * from rooms where occupant = 'N/A' and checkout = 'N/A';")
     table.place(x=40,y=40,height=395,width=1200)
     for i in cursor.fetchall():
